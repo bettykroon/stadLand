@@ -37,19 +37,17 @@ function renderCountriesAndCities(countries, cities) {
         header.innerHTML = "Städer jag har besökt:";
         let visitedCitiesContainer = document.createElement("div");
         // Hämtar de städer jag har besökt från LS
-        let visitedCities = JSON.parse(localStorage.getItem("visited"));
-        for(let i = 0; i < visitedCities.length; i++){
+        let visitedCitiesName = JSON.parse(localStorage.getItem("visitedName"));
+        for(let i = 0; i < visitedCitiesName.length; i++){
             // Skriver ut städerna jag har besökt
-            
-            visitedCitiesContainer.innerHTML += JSON.parse(localStorage.getItem("visited"))[i].id + "<br>";
-            
+            visitedCitiesContainer.innerHTML += JSON.parse(localStorage.getItem("visitedName"))[i].Stad + "<br>";
         }
         // Skapar en reset knapp som tar bort de städer jag sparat i LS
         let resetVisitedCities = document.createElement("button");
         resetVisitedCities.id = "resetBtn";
         resetVisitedCities.innerText = "Nollställ städer!";
         cityInfo.append(header, visitedCitiesContainer, resetVisitedCities);
-        //console.log(JSON.parse(localStorage.getItem("visited"))[0].id);
+        //console.log(JSON.parse(localStorage.getItem("visitedName"))[0].Stad);
 
         document.getElementById("resetBtn").addEventListener("click", function(){
             localStorage.clear();
@@ -104,13 +102,13 @@ function renderCountriesAndCities(countries, cities) {
                                     console.log("Besökta städer: ", localStorage.getItem("visited"));
 
                                     // Sparar stadens namn och invånarantal i LS
-                                    /*let visitedCitiesName = JSON.parse(localStorage.getItem("visitedName"));
+                                    let visitedCitiesName = JSON.parse(localStorage.getItem("visitedName"));
                                     if(visitedCitiesName == null) { visitedCitiesName = [];}
                                     let visitedCityName = { "Stad": city.stadname, "Invånare": city.population};
                                     localStorage.setItem("cityName", JSON.stringify(visitedCityName));
                                     visitedCitiesName.push(visitedCityName);
                                     localStorage.setItem("visitedName", JSON.stringify(visitedCitiesName));
-                                    console.log("Besökta städer: ", localStorage.getItem("visitedName"));*/
+                                    console.log("Besökta städer: ", localStorage.getItem("visitedName"));
 
                                     document.getElementById("haveYouVisited").style.visibility = "hidden";
                                 })

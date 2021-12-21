@@ -4,19 +4,35 @@
 }
 
 header {
-    background-color: firebrick;
+    background-color: #66a3ff;
+    height: 100px;
 }
 
 h2 {
-    padding: 10px;
+    padding: 30px;
     font-size: 2rem;
+    color: white;
+    text-shadow: 2px 2px black;
+    display: inline-flex;
 }
 
 h4 {
     padding: 10px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 button {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+#visitedCities {
+    color: yellow;
+}
+
+#cityInfo {
+    text-align: center;
+    font-size: 1.5rem;
     padding: 10px;
 }
