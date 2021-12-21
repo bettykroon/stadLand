@@ -1,8 +1,5 @@
 window.addEventListener("load", initSite);
 
-let countriesFromThen;
-let citiesFromThen;
-
 async function initSite() {
     let countries = await makeRequest("./json/land.json");
     let cities = await makeRequest("./json/stad.json");
@@ -36,25 +33,29 @@ function renderCountriesAndCities(countries, cities) {
         let header = document.createElement("h4");
         header.innerHTML = "Städer jag har besökt:";
         let visitedCitiesContainer = document.createElement("div");
-        // Hämtar de städer jag har besökt från LS
+        // Hämtar de städer jag har besökts id från LS
         let visitedCities = JSON.parse(localStorage.getItem("visited"));
         for(let i = 0; i < visitedCities.length; i++){
             // Skriver ut städerna jag har besökt
-            
-            visitedCitiesContainer.innerHTML += JSON.parse(localStorage.getItem("visited"))[i].id + "<br>";
-            
+            visitedCitiesContainer.innerHTML += JSON.parse(localStorage.getItem("visited"))[i].id + "<br>";   
         }
         // Skapar en reset knapp som tar bort de städer jag sparat i LS
         let resetVisitedCities = document.createElement("button");
         resetVisitedCities.id = "resetBtn";
         resetVisitedCities.innerText = "Nollställ städer!";
-        cityInfo.append(header, visitedCitiesContainer, resetVisitedCities);
+
+        // Totala antalet invånare i samtliga länder jag besökt
+        let totalNumberInhabitants = document.createElement("h4");
+        totalNumberInhabitants.id = "totalNumberInhabitants";
+        totalNumberInhabitants.innerText = "Antal invånare totalt: ";
+        cityInfo.append(header, visitedCitiesContainer, resetVisitedCities, totalNumberInhabitants);
         //console.log(JSON.parse(localStorage.getItem("visited"))[0].id);
 
         document.getElementById("resetBtn").addEventListener("click", function(){
             localStorage.clear();
             location.reload();
         })
+
     })
 
     // Skriver ut de länder som finns i land.json
@@ -62,7 +63,7 @@ function renderCountriesAndCities(countries, cities) {
         let countryHeader = document.createElement("h2");
         countryHeader.innerText = country.countryname;
         countryHeader.id = country.id;
-        console.log(countryHeader.id);
+        //console.log(countryHeader.id);
         countryContainer.append(countryHeader);
 
         // När man trycker på något av länderna i diven "countryContainer"
@@ -101,19 +102,17 @@ function renderCountriesAndCities(countries, cities) {
                                     localStorage.setItem("city", JSON.stringify(visitedCity));
                                     visitedCities.push(visitedCity);
                                     localStorage.setItem("visited", JSON.stringify(visitedCities));
-                                    console.log("Besökta städer: ", localStorage.getItem("visited"));
-
-                                    // Sparar stadens namn och invånarantal i LS
-                                    /*let visitedCitiesName = JSON.parse(localStorage.getItem("visitedName"));
-                                    if(visitedCitiesName == null) { visitedCitiesName = [];}
-                                    let visitedCityName = { "Stad": city.stadname, "Invånare": city.population};
-                                    localStorage.setItem("cityName", JSON.stringify(visitedCityName));
-                                    visitedCitiesName.push(visitedCityName);
-                                    localStorage.setItem("visitedName", JSON.stringify(visitedCitiesName));
-                                    console.log("Besökta städer: ", localStorage.getItem("visitedName"));*/
-
+                                    //console.log("Besökta städer: ", localStorage.getItem("visited"));
                                     document.getElementById("haveYouVisited").style.visibility = "hidden";
                                 })
+                                // Dölj knappen om staden finns i LS
+                                let cityInLs = JSON.parse(localStorage.getItem("visited"));
+                                for(let i = 0; i < cityInLs.length; i++){
+                                    // Skriver ut städerna jag har besökt
+                                    if(city.id == JSON.parse(localStorage.getItem("visited"))[i].id){
+                                        document.getElementById("haveYouVisited").style.visibility = "hidden";
+                                    }   
+                                }
                             }
                         })
                     }
