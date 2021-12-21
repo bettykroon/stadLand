@@ -50,14 +50,23 @@ function renderCountriesAndCities(countries, cities) {
         resetVisitedCities.innerText = "Nollställ städer!";
 
         // Totala antalet invånare i samtliga länder jag besökt
-        let totalNumberInhabitants = document.createElement("h4");
+        let totalNumberInhabitantsHeader = document.createElement("h4");
+        totalNumberInhabitantsHeader.innerText = "Antal invånare totalt: ";
+        let totalNumberInhabitants = document.createElement("div");
         totalNumberInhabitants.id = "totalNumberInhabitants";
-        totalNumberInhabitants.innerText = "Antal invånare totalt: ";
+        totalNumberInhabitants = 0;
 
         // Räkna ut totalt antal invånare 
+        for(let i = 0; i < visitedCities.length; i++){
+            cities.forEach((city) => {
+                if(JSON.parse(localStorage.getItem("visited"))[i].id == city.id){
+                    let population = city.population;
+                    totalNumberInhabitants += population;
+                }
+            })
+        }
 
-
-        cityInfo.append(header, visitedCitiesContainer, resetVisitedCities, totalNumberInhabitants);
+        cityInfo.append(header, visitedCitiesContainer, resetVisitedCities,totalNumberInhabitantsHeader, totalNumberInhabitants);
         //console.log(JSON.parse(localStorage.getItem("visited"))[0].id);
 
         document.getElementById("resetBtn").addEventListener("click", function(){
@@ -116,13 +125,11 @@ function renderCountriesAndCities(countries, cities) {
                                 })
                                 // Dölj knappen om staden finns i LS
                                 let cityInLs = JSON.parse(localStorage.getItem("visited"));
-                                if(cityInLs.length){
-                                    for(let i = 0; i < cityInLs.length; i++){
-                                        // Döljer knappen "har du besökt staden" i de städer jag har besökt
-                                        if(city.id == JSON.parse(localStorage.getItem("visited"))[i].id){
-                                            document.getElementById("haveYouVisited").style.visibility = "hidden";
-                                        }   
-                                    }
+                                for(let i = 0; i < cityInLs.length; i++){
+                                    // Döljer knappen "har du besökt staden" i de städer jag har besökt
+                                    if(city.id == JSON.parse(localStorage.getItem("visited"))[i].id){
+                                        document.getElementById("haveYouVisited").style.visibility = "hidden";
+                                    }   
                                 }
                             }
                         })
