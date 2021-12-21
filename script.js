@@ -30,6 +30,7 @@ function renderCountriesAndCities(countries, cities) {
         let cityContainer = document.getElementById("cities");
         cityContainer.innerHTML = "";
         cityInfo.innerHTML = "";
+        weatherContainer.innerHTML = "";
         let header = document.createElement("h4");
         header.innerHTML = "Städer jag har besökt:";
         let visitedCitiesContainer = document.createElement("div");
@@ -91,6 +92,7 @@ function renderCountriesAndCities(countries, cities) {
             if(e.target.id == countryHeader.id){
                 let cityContainer = document.getElementById("cities");
                 cityContainer.innerHTML = "";
+                weatherContainer.innerHTML = "";
                 let cityInfo = document.getElementById("cityInfo");
                 cityInfo.innerHTML = "";
                 // Om ja så skriver jag ut städerna för det landet
@@ -112,17 +114,20 @@ function renderCountriesAndCities(countries, cities) {
                                 // Skapar även en knapp som du trycker på om du besökt staden
                                 cityInfo.innerHTML = `<strong>${city.stadname}</strong> <br> Antalet invånare: ${city.population} <br> <p id="haveYouVisited">Har du besökt denna stad?</> <br> <button id="yes">JA</button>`;
 
+                                // Väder API
                                 fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city.stadname + "&appid=9cff4516de5bb7e06dd5fd8502b1b6d8&lang=sv")
                                 .then(response => response.json())
                                 .then(data => {
                                     console.log(data);
+                                    let weatherContainer = document.getElementById("weatherContainer");
+                                    weatherContainer.innerHTML = "";
                                     let nameValue = data['name'];
                                     let tempValue = data['main']['temp'];
                                     let kelvinToCelsius = tempValue - 273.15;
                                     let temp = kelvinToCelsius.toFixed(2);
                                     let descValue = data['weather'][0]['description'];
 
-                                    cityInfo.innerHTML += "Vädret i " + nameValue + " idag är: " + temp + " grader och " + descValue;
+                                    weatherContainer.innerHTML += "Vädret i " + nameValue + " idag är: " + temp + " grader och " + descValue;
                                 })
                                 .catch(err => alert("ERROR"))
 
