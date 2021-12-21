@@ -33,13 +33,16 @@ function renderCountriesAndCities(countries, cities) {
         let header = document.createElement("h4");
         header.innerHTML = "Städer jag har besökt:";
         let visitedCitiesContainer = document.createElement("div");
+        visitedCitiesContainer.id = "visitedCitiesContainer";
         // Hämtar de städer jag har besökts id från LS
         let visitedCities = JSON.parse(localStorage.getItem("visited"));
         for(let i = 0; i < visitedCities.length; i++){
             // Skriver ut städerna jag har besökt
-            visitedCitiesContainer.innerHTML += JSON.parse(localStorage.getItem("visited"))[i].id + "<br>";  
-            // FÅ ID TILL NAMN
-
+            cities.forEach((city) => {
+                if(JSON.parse(localStorage.getItem("visited"))[i].id == city.id){
+                    visitedCitiesContainer.innerHTML += city.stadname + "<br>";
+                }
+            })
         }
         // Skapar en reset knapp som tar bort de städer jag sparat i LS
         let resetVisitedCities = document.createElement("button");
@@ -113,11 +116,13 @@ function renderCountriesAndCities(countries, cities) {
                                 })
                                 // Dölj knappen om staden finns i LS
                                 let cityInLs = JSON.parse(localStorage.getItem("visited"));
-                                for(let i = 0; i < cityInLs.length; i++){
-                                    // Döljer knappen "har du besökt staden" i de städer jag har besökt
-                                    if(city.id == JSON.parse(localStorage.getItem("visited"))[i].id){
-                                        document.getElementById("haveYouVisited").style.visibility = "hidden";
-                                    }   
+                                if(cityInLs.length){
+                                    for(let i = 0; i < cityInLs.length; i++){
+                                        // Döljer knappen "har du besökt staden" i de städer jag har besökt
+                                        if(city.id == JSON.parse(localStorage.getItem("visited"))[i].id){
+                                            document.getElementById("haveYouVisited").style.visibility = "hidden";
+                                        }   
+                                    }
                                 }
                             }
                         })
