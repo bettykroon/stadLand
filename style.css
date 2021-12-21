@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: firebrick;
+}
+
+h2 {
+    padding: 10px;
+    font-size: 2rem;
+}
+
+h4 {
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+button {
+    padding: 10px;
+}
