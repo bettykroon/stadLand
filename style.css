@@ -59,3 +59,9 @@ section {
     background-image: linear-gradient(#66a3ff, white);
     height: 100vh;
 }
+
+@media screen and (max-width: 1024px){
+    h2 {
+        display: block;
+    }
+}
