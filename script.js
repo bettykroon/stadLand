@@ -137,8 +137,8 @@ function renderCountriesAndCities(countries, cities) {
                                 .catch(err => alert("ERROR"));
 
 
-
-                                fetch("https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + city.stadname + "&limit=1")
+                                // WIKI API
+                                fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + city.stadname + "&limit=1")
                                 .then(response => response.json())
                                 .then(data => {
 
