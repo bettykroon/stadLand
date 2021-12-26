@@ -18,7 +18,6 @@ async function makeRequest(url) {
 
 function renderCountriesAndCities(countries, cities) {
     // I diven "countryContainer" lägger jag till en rubrik "Städer jag har besökt" 
-    //let countryContainer = document.getElementById("countryContainer");
     let citiesIHaveVisited = document.createElement("h2");
     citiesIHaveVisited.id = "visitedCities";
     citiesIHaveVisited.innerText = "Städer jag har besökt";
@@ -27,7 +26,7 @@ function renderCountriesAndCities(countries, cities) {
     // När man trycker på rubriken "Städer jag har besökt"
     document.getElementById("visitedCities").addEventListener("click", function(){
         if(localStorage.length == 0){
-            alert("Du har inte besökt några städer")
+            cityInfo.innerHTML = "Du har inte besökt några städer..";
         }else {
             // Tömmer först diven
             let cityContainer = document.getElementById("cities");
@@ -136,7 +135,6 @@ function renderCountriesAndCities(countries, cities) {
                                 })
                                 .catch(err => alert("ERROR"));
 
-
                                 // WIKI API
                                 fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + city.stadname + "&limit=1")
                                 .then(response => response.json())
@@ -157,10 +155,6 @@ function renderCountriesAndCities(countries, cities) {
 
                                 })
                                 .catch(err => alert("ERROR"));
-
-
-
-
 
                                 // Om du trycker JA att du besökt staden
                                 document.getElementById("yes").addEventListener("click", function(){
